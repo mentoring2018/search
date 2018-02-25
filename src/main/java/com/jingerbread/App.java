@@ -1,10 +1,13 @@
 package com.jingerbread;
 
+import com.jingerbread.hashmap.CustomHashMap;
+import com.jingerbread.hashmap.Wrapper;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
+import java.util.function.Function;
 
 @Slf4j
 public class App {
@@ -12,6 +15,14 @@ public class App {
     public static void main( String[] args ) {
         DictionaryLoader dictionaryLoader = new DictionaryLoader();
         List<String> loadedWords = dictionaryLoader.getWords();
+        Function<String, Integer> hashFunction = s -> s.codePointAt(0);
+        CustomHashMap<Wrapper> hashMap = new CustomHashMap<>(32);
+
+        for (String w : loadedWords) {
+            Wrapper wrapper = new Wrapper(w, hashFunction);
+            hashMap.put(wrapper);
+        }
+
 
         Scanner in = new Scanner(System.in);
         boolean end;
@@ -23,10 +34,10 @@ public class App {
                     sort(loadedWords);
                     break;
                 case "search":
-                    search(loadedWords);
+                    search(hashMap, hashFunction);
                     break;
                 default:
-                    log.error("unsupported operation. exit");
+                    log.error("Unsupported operation. exit");
                     return;
             }
             log.info("If you want to exit: enter yes");
@@ -40,8 +51,14 @@ public class App {
         log.info("Sorted:\n{}", loaded);
     }
 
-    private static void search(List<String> loaded) {
-
+    private static void search(CustomHashMap<Wrapper> hashMap, Function<String, Integer> hashFunction) {
+        log.info("Enter word to search");
+        String word = new Scanner(System.in).nextLine();
+        if (hashMap.get(new Wrapper(word, hashFunction)).isPresent())  {
+            log.info("Found: {}", word);
+        } else {
+            log.info("No results");
+        }
     }
 
     private static void showHelpInfo() {

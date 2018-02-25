@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Function;
 
 @Slf4j
 public class CustomHashMap<T extends Comparable<? super T>> {
@@ -14,13 +15,16 @@ public class CustomHashMap<T extends Comparable<? super T>> {
 
     private int bucketCount;
 
-    public CustomHashMap(int count) {
+    private Function<T, Integer> hashFunction;
+
+    public CustomHashMap(int count, Function<T, Integer> hashFunction) {
         this.buckets = new List[count];
         this.bucketCount = count;
+        this.hashFunction = hashFunction;
     }
 
     public void put(T value) {
-        int hashCode = value.hashCode();
+        int hashCode = hashFunction.apply(value);
         int bucketNumber = hashCode % bucketCount;
         List<T> bucket = buckets[bucketNumber];
 
@@ -39,7 +43,7 @@ public class CustomHashMap<T extends Comparable<? super T>> {
     }
 
     public Optional<T> get(T value) {
-        int hashCode = value.hashCode();
+        int hashCode = hashFunction.apply(value);
         int bucketNumber = hashCode % bucketCount;
         List<T> bucket = buckets[bucketNumber];
 

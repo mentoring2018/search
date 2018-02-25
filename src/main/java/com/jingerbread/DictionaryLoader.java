@@ -3,13 +3,12 @@ package com.jingerbread;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.LinkedList;
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 public class DictionaryLoader {
@@ -17,20 +16,13 @@ public class DictionaryLoader {
     private final static String wordsPath = "words.txt";
 
     @Getter
-    private List<String> words = new LinkedList<>();
+    private List<String> words;
 
     public DictionaryLoader() {
         ClassLoader classLoader = getClass().getClassLoader();
-        String path = classLoader.getResource(wordsPath).getPath();
-        File wordsFile = new File(path);
-        if (!wordsFile.exists()) {
-            log.error("No file {} found.", wordsPath);
-            return;
-        }
-        try {
-            words = Files.readAllLines(Paths.get(wordsFile.getAbsolutePath()));
-        } catch (IOException e) {
-            log.error("Can't read load words from path {}", wordsPath, e);
-        }
+        InputStream in = classLoader.getResourceAsStream(wordsPath);
+        words = new BufferedReader(new InputStreamReader(in,
+                    StandardCharsets.UTF_8)).lines().collect(Collectors.toList());
+
     }
 }

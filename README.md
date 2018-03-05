@@ -1,3 +1,8 @@
+## For windows users, change console code page
+```bash
+chcp 1251
+Active code page: 1251
+```
 ## Build project
 ```bash
 mvn clean install

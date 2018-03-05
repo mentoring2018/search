@@ -14,15 +14,16 @@ public class App {
 
     private static ConsoleOutput console;
 
+    private static DictionaryLoader dictionaryLoader;
+
     public static void main( String[] args ) {
 
         try {
             console = new ConsoleOutput();
+            dictionaryLoader = new DictionaryLoader();
         } catch (UnsupportedEncodingException e) {
             log.error("Can't set up console output. exit.",e);
         }
-
-        DictionaryLoader dictionaryLoader = new DictionaryLoader();
         List<String> loadedWords = dictionaryLoader.getWords();
         Function<String, Integer> hashFunction = s -> s.codePointAt(0);
         CustomHashMap<String> hashMap = new CustomHashMap<>(32, hashFunction);
@@ -48,14 +49,10 @@ public class App {
         } while (true);
     }
 
-
-
     private static void sort(List<String> loaded) {
         Collections.sort(loaded);
         console.log("Sorted:\n" + loaded);
     }
-
-
 
     private static void search(CustomHashMap<String> hashMap) {
         log.info("Enter word to search");

@@ -3,6 +3,9 @@
 chcp 1251
 Active code page: 1251
 ```
+## For not windows users, remove from log4j.properties
+log4j.appender.A1.encoding=Cp1251
+
 ## Build project
 ```bash
 mvn clean install

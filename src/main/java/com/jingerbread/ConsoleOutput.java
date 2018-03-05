@@ -1,5 +1,6 @@
 package com.jingerbread;
 
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.PrintStream;
@@ -11,12 +12,15 @@ public class ConsoleOutput {
 
     private static final String WINDOWS_LOCALE = "Cp1251";//CP437, Cp1251, ISO8859_5
 
+    @Getter
+    private String encoding;
+
     private PrintStream printStream;
 
     public ConsoleOutput() throws UnsupportedEncodingException {
         String osName = System.getProperty("os.name");
-        String encoding = "UTF-8";
-        String consoleEncoding = System.getProperty("console.encoding");
+        this.encoding = "UTF-8";
+
         if (osName != null) {
             osName = osName.toLowerCase(Locale.ENGLISH);
             log.info("{} OS detected.", osName);

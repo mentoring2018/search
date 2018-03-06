@@ -10,7 +10,7 @@ import java.util.Locale;
 @Slf4j
 public class ConsoleOutput {
 
-    private static final String WINDOWS_LOCALE = "Cp1251";//CP437, Cp1251, ISO8859_5
+    private static final String WINDOWS_LOCALE = "Cp1251";//CP437, Cp1251, ISO8859_5, UTF-8
 
     @Getter
     private String encoding;

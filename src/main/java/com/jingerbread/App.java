@@ -56,12 +56,14 @@ public class App {
 
     private static void search(CustomHashMap<String> hashMap) throws UnsupportedEncodingException {
         log.info("Enter word to search");
-        String word = new Scanner(System.in).nextLine();
-        word = new String(word.getBytes(), console.getEncoding());
-        if (hashMap.get(word).isPresent())  {
-            log.info("Found: {}", word);
-        } else {
-            log.info("No results");
+        Scanner scanner = new Scanner(System.in, console.getEncoding());
+        if (scanner.hasNextLine()) {
+            String word = scanner.nextLine();
+            if (hashMap.get(word).isPresent()) {
+                log.info("Found: {}", word);
+            } else {
+                log.info("No results");
+            }
         }
     }
 

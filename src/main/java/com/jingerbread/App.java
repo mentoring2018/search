@@ -49,6 +49,7 @@ public class App {
         }
     }
 
+
     private static void sort(List<String> loaded) {
         Collections.sort(loaded);
         console.log("Sorted:\n" + loaded);

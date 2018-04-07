@@ -7,6 +7,7 @@ Active code page: 1251
 log4j.appender.A1.encoding=Cp1251
 
 ## Build project
+test-branch
 ```bash
 mvn clean install
 ```

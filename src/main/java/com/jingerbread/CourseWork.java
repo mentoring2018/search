@@ -14,7 +14,7 @@ public class CourseWork {
         String str;
 
       // как исправить ошибку NullPointerException?
-        ClassLoader classLoader = CourseWork.class.getClass().getClassLoader();
+       ClassLoader classLoader = CourseWork.class.getClass().getClassLoader();
         try {
             fstream = classLoader.getResourceAsStream(wordsPath);
             BufferedReader br = new BufferedReader(new InputStreamReader(fstream, encoding));

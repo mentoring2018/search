@@ -8,6 +8,9 @@ public class CourseWork {
     private static final String ENCODING = "UTF-8";
     private static final List<String> loadlist = new ArrayList<String>();
     private static final Map<String, Character> hashMap = new HashMap<String, Character>();
+    private static final String alf = "абвгдеёжзийклмнопрстуфчцчшщъыьэюя";
+    private static final int alflen = alf.length();
+    private static final ArrayList<String>[] listOfList = new ArrayList[alflen];
 
     public static void main(String[] args) {
         InputStream fstream = null;
@@ -55,13 +58,13 @@ public class CourseWork {
                     System.out.println(search(searword, stpoint, endpoint, mpoint));
                     break;
                 case ("hash"):
-                    hash();
+                    new_hash();
                     break;
                 case ("hash search"):
                     Scanner hs = new Scanner(System.in);
                     System.out.println("enter search word");
                     String hashsearword = hs.nextLine();
-                    System.out.println(hashsearch(hashsearword));
+                    System.out.println(new_hashsearch(hashsearword));
                     break;
                 case ("exit"):
                     System.out.println("buy-bye");
@@ -128,6 +131,41 @@ public class CourseWork {
         }
         return "this word wasn't found";
     }
+
+
+    private static void new_hash() {
+        for (int i = 0; i < alflen; i++)
+            listOfList[i] = new ArrayList<String>();
+
+        String curword;
+        Character curlet;
+
+        for (int i = 0; i < loadlist.size(); i++) {
+            curword = loadlist.get(i);
+            curlet = curword.toLowerCase().charAt(0);
+
+            for (int j = 0; j < alflen; j++) {
+                if (curlet.equals(alf.toLowerCase().charAt(j)))
+                    listOfList[j].add(curword);
+            }
+        }
+    }
+
+
+    private static String new_hashsearch(String word) {
+        Character wordlet = word.toLowerCase().charAt(0);
+
+        for (int i = 0; i < alflen; i++) {
+            if (wordlet.equals(alf.toLowerCase().charAt(i))) {
+                for (int j = 0; j < listOfList[i].size(); j++) {
+                    if (word.equals(listOfList[i].get(j)))
+                        return "this word was found";
+                }
+            }
+        }
+        return "this word wasn't found";
+    }
+
 }
 
 
